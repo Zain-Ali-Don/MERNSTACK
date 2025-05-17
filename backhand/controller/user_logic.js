@@ -1,6 +1,17 @@
 let user = require("../collection/User");
 let b = require("bcrypt");
 let jwt = require("jsonwebtoken");
+let node = require("nodemailer")
+require("dotenv").config();
+
+let Email_Info = node.createTransport({
+  service:"gmail",
+  auth:{
+    user:process.env.EMAIL,
+    pass:process.env.PASS_KEY
+  }
+})
+
 let user_function = {
   register: async function (req, res) {
     try {
@@ -20,7 +31,25 @@ let user_function = {
         });
 
         let save_data = await user_data.save();
+
+       
         res.status(200).json({ msg: "User registered successfully" });
+        let email_data = {
+          to: email,
+          from: process.env.EMAIL,
+          subject: "Account Registered Successfully",
+          html: `<h3>Hello ${name}</h3> 
+                 <p>Your Account has been successfully registered, now you can login and start with us. 
+                 <a href='http://localhost:3000/log'>Click Here to Continue on Site</a></p>`
+        };
+        
+        Email_Info.sendMail(email_data, function(e, i) {
+          if (e) {
+            console.log(e.message);
+          } else {
+            console.log("Email Sent Successfully" + i);
+          }
+        });        
       }
     } catch (error) {
       res.status(501).json({ msg: error.message });
@@ -83,7 +112,42 @@ let user_function = {
     } catch (error) {
       res.status(501).json({msg:error.message});
     }
-  }
+  },
+  forgotPassword: async function (req, res) {
+    try {
+        let { email } = req.body;
+        let email_check = await user.findOne({ email });
+
+        if (!email_check) {
+            return res.status(404).json({ msg: "Email is Invalid / User Not Found" });
+        }
+
+        let token = jwt.sign({ id: email_check.id }, "hunain123", { expiresIn: "1h" });
+        let link = "http://localhost:3000/reset/" + token;
+
+        let email_body = {
+            to: email,
+            from: process.env.EMAIL,
+            subject: "Reset Password",
+            html: `<h3>Hi ${email_check.name}</h3> <p>Hope You're doing well, Here is your reset Password link, 
+            Please click on the given link to reset your password</p> ${link}`
+        };
+
+        Email_Info.sendMail(email_body, function (er, i) {
+            if (er) {
+                console.log(er.message);
+            } else {
+                console.log("Email Sent Successfully" + i);
+            }
+        });
+
+        res.status(201).json({ msg: "Password Reset Link Has been Sent" });
+
+    } catch (error) {
+        res.status(501).json({ msg: error.message });
+    }
+}
+
   
 };
 

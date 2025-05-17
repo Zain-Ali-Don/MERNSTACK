@@ -64,24 +64,24 @@ export default function Rigester() {
 
   return (
     <div>
-       <div class="container">
+       <div className="container">
    
       <h2>Join the Gym Team 💪</h2>
 
-      <label for="name">Full Name</label>
-      <input type="text" id="name" name="name" required className='form-control my-2' value={name} 
+      <label htmlFor="name">Full Name</label>
+      <input type="text" id="name" name="name" required className='htmlForm-control my-2' value={name} 
       onChange={(e)=>setName(e.target.value)}/>
 
-      <label for="email">Email Address</label>
-      <input type="email" id="email" name="email" required className='form-control my-2' value={email} 
+      <label htmlFor="email">Email Address</label>
+      <input type="email" id="email" name="email" required className='htmlForm-control my-2' value={email} 
       onChange={(e)=>setEmail(e.target.value)}/>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required className='form-control my-2' value={pswd} 
+      <label htmlFor="password">Password</label>
+      <input type="password" id="password" name="password" required className='htmlForm-control my-2' value={pswd} 
       onChange={(e)=>setPswd(e.target.value)}/>
 
       <label>Gender</label>
-      <div class="gender-options">
+      <div className="gender-options">
         <label><input type="radio" name="gender" value="male" required 
         onChange={(e)=>setGender(e.target.value)} checked={gender === "male"}/> Male</label>
         <label><input type="radio" name="gender" value="female" 
@@ -90,11 +90,11 @@ export default function Rigester() {
         onChange={(e)=>setGender(e.target.value)} checked={gender === "other"}/> Other</label>
       </div>
 
-      <label for="age">Age</label>
-      <input type="number" id="age" name="age" required min="13" className='form-control my-2' value={age} 
+      <label htmlFor="age">Age</label>
+      <input type="number" id="age" name="age" required min="13" classNameName='htmlForm-control my-2' value={age} 
       onChange={(e)=>setAge(e.target.value)}/>
 
-      <button  className='btn btn-primary' onClick={register_user}>Register Now</button>
+      <button  classNameName='btn btn-primary' onClick={register_user}>Register Now</button>
       <ToastContainer/>
 
   </div>

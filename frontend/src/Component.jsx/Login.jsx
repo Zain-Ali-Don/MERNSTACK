@@ -53,6 +53,7 @@ export default function Login() {
 
       <p className="mt-2">
         <Link to="/reg">Register Your Account</Link>
+        <Link to="/fp">Forgot Password</Link>
       </p>
     </div>
   );

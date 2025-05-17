@@ -10,6 +10,8 @@ import Main from './Component.jsx/Main';
 import Rigester from './Component.jsx/Rigester';
 import ShowUser from './Component.jsx/ShowUser';
 import Login from './Component.jsx/Login';
+import ForgotPassword from './Component.jsx/ForgotPassword';
+import ResetPassword from './Component.jsx/ResetPassword';
 function App() {
   return (
     <BrowserRouter>
@@ -19,6 +21,8 @@ function App() {
       <Route path='/reg' element={<Rigester/>}/>
       <Route path='/get' element={<ShowUser/>}/>
       <Route path='/log' element={<Login/>}/>
+      <Route path='/fp' element={<ForgotPassword/>}/>
+      <Route path='/reset/:token' element={<ResetPassword/>}/>
 
     </Routes>
     </div>
